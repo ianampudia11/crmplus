@@ -7775,7 +7775,6 @@
         "key": "flow_builder.typebot_node.mappings_label",
         "value": "mapeos"
     },
-    
     {
         "key": "flow_builder.typebot_node.api_connected",
         "value": "API Conectada"
@@ -8128,7 +8127,6 @@
         "key": "flow_builder.singleton_errors.flowise_exists",
         "value": "Solo se permite un nodo Flowise por flujo"
     },
-
     {
         "key": "campaigns.dashboard_description",
         "value": "Gestiona y supervisa tus campañas de mensajería masiva"
@@ -13612,5 +13610,129 @@
     {
         "key": "flow_builder.ai_default_system_prompt",
         "value": "Eres un asistente útil. Responde las preguntas de los usuarios de manera concisa y precisa. Solo realiza acciones específicas cuando el usuario las solicite explícitamente."
+    },
+    {
+        "key": "landing.nav.features",
+        "value": "Características"
+    },
+    {
+        "key": "landing.nav.pricing",
+        "value": "Precios"
+    },
+    {
+        "key": "landing.nav.about",
+        "value": "Acerca de"
+    },
+    {
+        "key": "landing.nav.contact",
+        "value": "Contacto"
+    },
+    {
+        "key": "landing.nav.sign_in",
+        "value": "Iniciar Sesión"
+    },
+    {
+        "key": "landing.nav.get_started",
+        "value": "Comenzar"
+    },
+    {
+        "key": "landing.hero.title",
+        "value": "¿Listo para transformar la comunicación con tus clientes?"
+    },
+    {
+        "key": "landing.hero.subtitle",
+        "value": "Únete a miles de empresas que usan {{appName}} para optimizar sus interacciones con clientes y aumentar las tasas de satisfacción."
+    },
+    {
+        "key": "landing.hero.start_free_trial",
+        "value": "Comenzar Prueba Gratuita"
+    },
+    {
+        "key": "landing.pricing.title",
+        "value": "Precios simples y transparentes"
+    },
+    {
+        "key": "landing.pricing.subtitle",
+        "value": "Elige el plan perfecto para tu negocio. Comienza gratis, actualiza cuando necesites más."
+    },
+    {
+        "key": "landing.pricing.loading",
+        "value": "Cargando planes de precios..."
+    },
+    {
+        "key": "landing.pricing.error",
+        "value": "Error al cargar los planes de precios"
+    },
+    {
+        "key": "landing.pricing.retry",
+        "value": "Reintentar"
+    },
+    {
+        "key": "landing.pricing.most_popular",
+        "value": "Más Popular"
+    },
+    {
+        "key": "landing.pricing.free",
+        "value": "Gratis"
+    },
+    {
+        "key": "landing.pricing.forever",
+        "value": "para siempre"
+    },
+    {
+        "key": "landing.pricing.get_started_free",
+        "value": "Comenzar Gratis"
+    },
+    {
+        "key": "landing.pricing.start_trial",
+        "value": "Comenzar Prueba Gratuita de {{days}} Días"
+    },
+    {
+        "key": "landing.pricing.get_started",
+        "value": "Comenzar"
+    },
+    {
+        "key": "landing.pricing.users",
+        "value": "Hasta {{count}} usuarios"
+    },
+    {
+        "key": "landing.pricing.contacts",
+        "value": "{{count}} contactos"
+    },
+    {
+        "key": "landing.pricing.channels",
+        "value": "{{count}} canales"
+    },
+    {
+        "key": "landing.pricing.flows",
+        "value": "{{count}} flujos"
+    },
+    {
+        "key": "landing.cta.title",
+        "value": "¿Listo para transformar la comunicación con tus clientes?"
+    },
+    {
+        "key": "landing.cta.subtitle",
+        "value": "Únete a miles de empresas que usan {{appName}} para optimizar sus interacciones con clientes y aumentar las tasas de satisfacción."
+    },
+    {
+        "key": "landing.cta.start_free_trial",
+        "value": "Comenzar Prueba Gratuita"
+    },
+    {
+        "key": "landing.cta.sign_in",
+        "value": "Iniciar Sesión"
+    },
+    {
+        "key": "landing.trust.enterprise_security",
+        "value": "Seguridad Empresarial"
+    },
+    {
+        "key": "landing.trust.uptime",
+        "value": "99.9% Tiempo de Actividad"
+    },
+    {
+        "key": "landing.trust.soc2_compliant",
+        "value": "Cumplimiento SOC 2"
     }
 ]
