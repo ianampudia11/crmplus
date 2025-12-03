@@ -6,7 +6,7 @@
 set -e
 
 DOMAIN="chat.ianampudia.com"
-REPO_URL="https://github.com/PointerSoftware/ianampudia11.git"
+REPO_URL="https://github.com/ianampudia11/iawarrior.git"
 APP_DIR="/opt/iawarrior-tech"
 EMAIL="admin@ianampudia.com" # Change this if needed
 
