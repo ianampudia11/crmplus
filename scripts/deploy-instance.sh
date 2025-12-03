@@ -128,6 +128,9 @@ create_docker_compose() {
     export DB_USER="${DB_USER:-postgres}"
     export DB_PASSWORD="${DB_PASSWORD:-root}"
     export NODE_ENV="${NODE_ENV:-production}"
+    
+    # Generate a random instance ID for the subnet (10-250) to avoid collisions
+    export INSTANCE_ID=$((RANDOM % 240 + 10))
 
     # Create docker-compose.yml from template
     envsubst < "$PROJECT_ROOT/docker-compose.template.yml" > "$instance_dir/docker-compose.yml"
