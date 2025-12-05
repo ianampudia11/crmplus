@@ -9,29 +9,40 @@ async function resetAdminPassword() {
     console.log(`Resetting password for ${email}...`);
 
     try {
-        const user = await storage.getUserByEmail(email);
-
-        if (!user) {
-            console.error(`User with email ${email} not found!`);
-            process.exit(1);
-        }
-
-        console.log(`Found user ID: ${user.id}`);
-
+        let user = await storage.getUserByEmail(email);
         const hashedPassword = await hashPassword(newPassword);
 
-        // Update password and ensure super admin status
-        await storage.updateUser(user.id, {
-            password: hashedPassword,
-            isSuperAdmin: true,
-            role: 'super_admin'
-        });
+        if (!user) {
+            console.log(`User with email ${email} not found. Creating new admin user...`);
+            user = await storage.createUser({
+                username: 'admin',
+                email: email,
+                password: hashedPassword,
+                fullName: 'System Administrator',
+                role: 'super_admin',
+                isSuperAdmin: true,
+                active: true,
+                companyId: null, // Super admin might not need a company
+                avatarUrl: null,
+                languagePreference: 'es',
+                permissions: {}
+            });
+            console.log(`Created new admin user with ID: ${user.id}`);
+        } else {
+            console.log(`Found user ID: ${user.id}`);
+            // Update password and ensure super admin status
+            await storage.updateUser(user.id, {
+                password: hashedPassword,
+                isSuperAdmin: true,
+                role: 'super_admin'
+            });
+            console.log('User updated successfully!');
+        }
 
-        console.log('Password updated successfully!');
         console.log('Super Admin status confirmed.');
         process.exit(0);
     } catch (error) {
-        console.error('Error resetting password:', error);
+        console.error('Error resetting/creating admin:', error);
         process.exit(1);
     }
 }

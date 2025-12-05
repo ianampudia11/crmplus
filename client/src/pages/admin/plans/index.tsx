@@ -164,7 +164,7 @@ export default function PlansPage() {
     bandwidthLimit: 10240, // 10GB default
     fileUploadLimit: 25, // 25MB default
     totalFilesLimit: 1000, // 1000 files default
-    
+
 
     billingInterval: 'monthly' as 'lifetime' | 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'semi_annual' | 'annual' | 'biennial' | 'custom',
     customDurationDays: null as number | null
@@ -323,7 +323,7 @@ export default function PlansPage() {
       bandwidthLimit: (plan as any).bandwidthLimit || 10240,
       fileUploadLimit: (plan as any).fileUploadLimit || 25,
       totalFilesLimit: (plan as any).totalFilesLimit || 1000,
-      
+
 
       billingInterval: (plan as any).billingInterval || 'monthly',
       customDurationDays: (plan as any).customDurationDays || null
@@ -370,7 +370,7 @@ export default function PlansPage() {
       bandwidthLimit: 10240,
       fileUploadLimit: 25,
       totalFilesLimit: 1000,
-      
+
 
       billingInterval: 'monthly',
       customDurationDays: null
@@ -666,6 +666,30 @@ export default function PlansPage() {
                     >
                       Add Campaign Feature
                     </Button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+                  <Label htmlFor="enablePages" className="sm:text-right">
+                    Pages / Website Builder
+                  </Label>
+                  <div className="sm:col-span-3 flex items-center space-x-2">
+                    <Switch
+                      id="enablePages"
+                      checked={formData.campaignFeatures.includes('pages')}
+                      onCheckedChange={(checked) => {
+                        let newFeatures = [...formData.campaignFeatures];
+                        if (checked) {
+                          if (!newFeatures.includes('pages')) newFeatures.push('pages');
+                        } else {
+                          newFeatures = newFeatures.filter(f => f !== 'pages');
+                        }
+                        setFormData({ ...formData, campaignFeatures: newFeatures });
+                      }}
+                    />
+                    <Label htmlFor="enablePages">
+                      {formData.campaignFeatures.includes('pages') ? "Enabled" : "Disabled"}
+                    </Label>
                   </div>
                 </div>
 

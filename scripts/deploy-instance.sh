@@ -124,7 +124,7 @@ create_docker_compose() {
     export INSTANCE_NAME="$instance_name"
     export APP_PORT="$app_port"
     export DB_PORT="$db_port"
-    export DB_NAME="powerchat_${instance_name}"
+    export DB_NAME="iawarrior_${instance_name}"
     export DB_USER="${DB_USER:-postgres}"
     export DB_PASSWORD="${DB_PASSWORD:-root}"
     export NODE_ENV="${NODE_ENV:-production}"
@@ -162,7 +162,7 @@ create_env_file() {
     sed -i "s/INSTANCE_NAME=.*/INSTANCE_NAME=$instance_name/" "$env_file"
     sed -i "s/APP_PORT=.*/APP_PORT=$app_port/" "$env_file"
     sed -i "s/DB_PORT=.*/DB_PORT=$db_port/" "$env_file"
-    sed -i "s/DB_NAME=.*/DB_NAME=powerchat_${instance_name}/" "$env_file"
+    sed -i "s/DB_NAME=.*/DB_NAME=iawarrior_${instance_name}/" "$env_file"
     sed -i "s/SESSION_SECRET=.*/SESSION_SECRET=$session_secret/" "$env_file"
 
     if [ -n "$company_name" ]; then

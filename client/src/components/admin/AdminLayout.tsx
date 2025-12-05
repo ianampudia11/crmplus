@@ -92,7 +92,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-primary text-white px-6 py-3 flex justify-between items-center relative z-50"
-              style={{ backgroundColor: branding.primaryColor }}>
+        style={{ backgroundColor: branding.primaryColor }}>
         <div className="flex items-center">
           <Button
             variant="ghost"
@@ -185,11 +185,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/dashboard">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location === '/admin/dashboard'
+                className={`w-full justify-start text-white transition-colors ${location === '/admin/dashboard'
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Home className="mr-2 h-5 w-5" />
                 {t('admin.nav.dashboard', 'Dashboard')}
@@ -199,11 +198,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/companies">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/companies')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/companies')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Building className="mr-2 h-5 w-5" />
                 {t('admin.nav.companies', 'Companies')}
@@ -213,11 +211,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/users">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/users')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/users')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Users className="mr-2 h-5 w-5" />
                 {t('admin.nav.users', 'Users')}
@@ -227,11 +224,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/plans">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/plans')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/plans')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Package className="mr-2 h-5 w-5" />
                 {t('admin.nav.plans', 'Plans')}
@@ -241,11 +237,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/coupons">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/coupons')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/coupons')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Tag className="mr-2 h-5 w-5" />
                 {t('admin.nav.coupons', 'Coupons')}
@@ -255,11 +250,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/payments">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/payments')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/payments')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <CreditCard className="mr-2 h-5 w-5" />
                 {t('admin.payments.title', 'Payment Management')}
@@ -283,11 +277,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/analytics">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/analytics')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/analytics')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <BarChart className="mr-2 h-5 w-5" />
                 {t('admin.nav.analytics', 'Analytics')}
@@ -297,11 +290,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Link href="/admin/translations">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/translations')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/translations')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Globe className="mr-2 h-5 w-5" />
                 {t('admin.nav.translations', 'Translations')}
@@ -310,28 +302,26 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
             {/* For Kaif Ahmad */}
 
-            {/* <Link href="/admin/website-builder">
+            <Link href="/admin/website-builder">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/website-builder')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/website-builder')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Layout className="mr-2 h-5 w-5" />
                 Website Builder
               </Button>
-            </Link> */}
+            </Link>
 
             <Link href="/admin/settings">
               <Button
                 variant="ghost"
-                className={`w-full justify-start text-white transition-colors ${
-                  location.startsWith('/admin/settings')
+                className={`w-full justify-start text-white transition-colors ${location.startsWith('/admin/settings')
                     ? 'bg-white/20 text-white'
                     : 'hover:bg-white/10 text-white/80 hover:text-white'
-                }`}
+                  }`}
               >
                 <Settings className="mr-2 h-5 w-5" />
                 {t('admin.nav.settings', 'Settings')}
@@ -342,9 +332,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         </aside>
 
-        <main className={`flex-1 bg-gray-50 overflow-auto transition-all duration-300 ${
-          isMobile ? 'w-full' : sidebarOpen ? 'ml-0' : 'ml-0'
-        }`}>
+        <main className={`flex-1 bg-gray-50 overflow-auto transition-all duration-300 ${isMobile ? 'w-full' : sidebarOpen ? 'ml-0' : 'ml-0'
+          }`}>
           {children}
         </main>
       </div>

@@ -20,7 +20,7 @@ export const ensureSuperAdmin = (req: Request, res: Response, next: NextFunction
     if (err) {
       return next(err);
     }
-    
+
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -115,6 +115,32 @@ export const getUserPermissions = async (user: SelectUser): Promise<Record<strin
         }
       } else {
         rolePermissions = (DEFAULT_ROLE_PERMISSIONS as any)[user.role] || {};
+      }
+
+      // Filter permissions based on Plan Features
+      const company = await storage.getCompany(user.companyId);
+      if (company && company.planId) {
+        const plan = await storage.getPlan(company.planId);
+        if (plan) {
+          const features = plan.campaignFeatures || [];
+
+          // Check for Pages feature
+          if (!features.includes('pages')) {
+            delete (rolePermissions as any)[PERMISSIONS.VIEW_PAGES];
+            delete (rolePermissions as any)[PERMISSIONS.MANAGE_PAGES];
+          }
+
+          // Check for Campaigns feature (already existing logical assumption but enforcing)
+          if (!features.includes('basic_campaigns') && !features.includes('advanced_campaigns')) {
+            delete (rolePermissions as any)[PERMISSIONS.VIEW_CAMPAIGNS];
+            delete (rolePermissions as any)[PERMISSIONS.CREATE_CAMPAIGNS];
+            delete (rolePermissions as any)[PERMISSIONS.EDIT_CAMPAIGNS];
+            delete (rolePermissions as any)[PERMISSIONS.DELETE_CAMPAIGNS];
+            delete (rolePermissions as any)[PERMISSIONS.MANAGE_TEMPLATES];
+            delete (rolePermissions as any)[PERMISSIONS.MANAGE_SEGMENTS];
+            delete (rolePermissions as any)[PERMISSIONS.VIEW_CAMPAIGN_ANALYTICS];
+          }
+        }
       }
     } catch (error) {
       rolePermissions = (DEFAULT_ROLE_PERMISSIONS as any)[user.role] || {};
