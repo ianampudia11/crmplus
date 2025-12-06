@@ -86,6 +86,9 @@ chmod +x deploy.sh
 # We'll call the instance "main" and use port 5000
 ./scripts/deploy-instance.sh "main" --app-port 5000 --db-port 5432 --company-name "Iawarrior tech" --admin-email "$EMAIL" --admin-password "$ADMIN_PASSWORD"
 
+# Configure BASE_URL in the instance .env
+echo "BASE_URL=https://$DOMAIN" >> "$APP_DIR/instances/main/.env"
+
 # 6. Configure Nginx
 echo -e "${GREEN}Configuring Nginx...${NC}"
 cat > /etc/nginx/sites-available/$DOMAIN << EOF
