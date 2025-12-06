@@ -123,10 +123,12 @@ export async function setupAuth(app: Express) {
   app.use(session(sessionSettings));
 
 
+  console.log('DEBUG: Setting up auth middleware...');
   app.use(subdomainMiddleware);
 
   app.use(passport.initialize());
   app.use(passport.session());
+  console.log('DEBUG: Passport initialized');
 
 
   passport.use('local',

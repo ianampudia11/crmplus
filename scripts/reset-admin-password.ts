@@ -7,13 +7,34 @@ async function resetAdminPassword() {
     const newPassword = process.argv[3] || 'admin123';
 
     console.log(`Resetting password for ${email}...`);
+    console.log("Running Reset Script v2 (Smart Update)...");
 
     try {
         let user = await storage.getUserByEmail(email);
         const hashedPassword = await hashPassword(newPassword);
 
+        // If not found by email, try to find by username 'admin' to avoid duplicates
         if (!user) {
-            console.log(`User with email ${email} not found. Creating new admin user...`);
+            console.log(`User with email ${email} not found. Checking for 'admin' username...`);
+            user = await storage.getUserByUsername('admin');
+
+            if (user) {
+                console.log(`Found existing user with username 'admin' (ID: ${user.id}). Updating email and password...`);
+                // Update email along with password
+                await storage.updateUser(user.id, {
+                    email: email,
+                    password: hashedPassword,
+                    isSuperAdmin: true,
+                    role: 'super_admin'
+                });
+                console.log('User updated successfully!');
+                console.log('Super Admin status confirmed.');
+                process.exit(0);
+            }
+        }
+
+        if (!user) {
+            console.log(`User not found. Creating new admin user...`);
             user = await storage.createUser({
                 username: 'admin',
                 email: email,

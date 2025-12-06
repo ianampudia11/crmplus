@@ -68,10 +68,13 @@ app.use((req, res, next) => {
 
 (async () => {
 
+  console.log('DEBUG: Starting application...');
   await ensureUploadDirectories();
+  console.log('DEBUG: Upload directories ensured');
 
+  console.log('DEBUG: Registering routes...');
   const server = await registerRoutes(app);
-
+  console.log('DEBUG: Routes registered');
 
   setupSecurityReporting(app);
 
@@ -79,11 +82,10 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-
     if (!res.headersSent) {
       res.status(status).json({ message });
     }
-    
+
 
     console.error('Error handler:', err);
   });
@@ -114,7 +116,7 @@ app.use((req, res, next) => {
           await migrationSystem.runPendingMigrations();
           logger.info('migration', 'Database migrations completed successfully');
         } catch (error) {
-        
+
         }
 
 
@@ -181,13 +183,13 @@ app.use((req, res, next) => {
         }
 
         logger.info('instagram', 'Initializing Instagram health monitoring...');
-          try {
-            const { initializeHealthMonitoring } = await import('./services/channels/instagram');
-            await initializeHealthMonitoring();
-            logger.info('instagram', '✅ Instagram health monitoring initialized successfully');
-          } catch (error) {
-            logger.error('instagram', '❌ Instagram health monitoring initialization failed:', error);
-          }
+        try {
+          const { initializeHealthMonitoring } = await import('./services/channels/instagram');
+          await initializeHealthMonitoring();
+          logger.info('instagram', '✅ Instagram health monitoring initialized successfully');
+        } catch (error) {
+          logger.error('instagram', '❌ Instagram health monitoring initialization failed:', error);
+        }
 
         logger.info('messenger', 'Ensuring Messenger channels are active...');
         try {
@@ -357,14 +359,14 @@ app.use((req, res, next) => {
 
 
             await licenseValidator.initializeIpDetection();
-            
+
             const licenseValidation = await licenseValidator.validateLicense();
             if (licenseValidation.valid) {
               logger.info('license', `✅ License valid - Expires: ${licenseInfo.expiryDate?.toISOString().split('T')[0]}, Days remaining: ${licenseInfo.daysRemaining}, Allowed IPs: ${licenseInfo.allowedIps?.length || 0}`);
             } else {
               logger.warn('license', `⚠️ License validation failed: ${licenseValidation.reason}`);
               if (licenseValidation.reason === 'License expired') {
-                const daysExpired = licenseValidation.expiryDate 
+                const daysExpired = licenseValidation.expiryDate
                   ? Math.ceil((Date.now() - licenseValidation.expiryDate.getTime()) / (1000 * 60 * 60 * 24))
                   : 0;
                 if (daysExpired > 30) {
