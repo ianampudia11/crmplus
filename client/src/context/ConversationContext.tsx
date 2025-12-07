@@ -110,7 +110,7 @@ function filterGroupChatsFromConversations(conversations: any[]): any[] {
 
     if (conversation.contactId === null && !conversation.isGroup && !conversation.is_group) {
       const suspiciousId = conversation.groupJid || conversation.group_jid ||
-                          conversation.phone || conversation.identifier;
+        conversation.phone || conversation.identifier;
       if (suspiciousId && isWhatsAppGroupChatId(suspiciousId)) {
         return false;
       }
@@ -303,6 +303,71 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
 
   const { isConnected, sendMessage: wsSend, onMessage } = useSocket('/ws');
   const [, navigate] = useLocation();
+
+  // Sound effect for new messages
+  const notificationAudio = useMemo(() => {
+    return new Audio('/notification.mp3');
+  }, []);
+
+  useEffect(() => {
+    const handleNewMessage = (data: any) => {
+      if (!data || !data.message) return;
+
+      const message = data.message;
+      const conversationId = message.conversationId;
+
+      // 1. Play sound and show toast if it's an incoming message (not from us)
+      // and we are not currently focusing on this conversation window or window is blurred
+      const isIncoming = message.direction === 'inbound';
+
+      if (isIncoming) {
+        // Play sound
+        notificationAudio.currentTime = 0;
+        notificationAudio.play().catch(e => console.log('Audio autoplay blocked', e));
+
+        // Show toast if we are not looking at this conversation
+        if (activeConversationId !== conversationId) {
+          toast({
+            title: t('notifications.new_message', 'New Message'),
+            description: message.content || t('notifications.media_message', 'Media message'),
+            duration: 3000,
+            onClick: () => {
+              setActiveConversationId(conversationId);
+              navigate('/inbox');
+            }
+          });
+        }
+      }
+
+      // 2. Real-time Sorting: Move conversation to top
+      setAllConversations(prev => {
+        const index = prev.findIndex(c => c.id === conversationId);
+        if (index === -1) {
+          // If conversation not found (new?), we might need to refetch or add it. 
+          // For now, let's refetch to be safe if it's missing
+          refetchConversations();
+          return prev;
+        }
+
+        const conversation = { ...prev[index] };
+
+        // Update preview
+        conversation.lastMessageAt = message.createdAt;
+        conversation.lastMessage = message.content;
+
+        // Remove from current position and add to top
+        const newConversations = [...prev];
+        newConversations.splice(index, 1);
+        return [conversation, ...newConversations];
+      });
+
+    };
+
+    const unsubscribe = onMessage('newMessage', handleNewMessage);
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [onMessage, activeConversationId, notificationAudio, toast, t, navigate, refetchConversations]);
 
 
   useEffect(() => {
@@ -522,6 +587,54 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       fetchConversations(1, false);
     }
   }, [user, authLoading]);
+
+  // Handle new message socket events
+  useEffect(() => {
+    const handleNewMessage = (data: any) => {
+      if (!data || !data.message) return;
+
+      const message = data.message;
+      const conversationId = message.conversationId;
+
+      const isIncoming = message.direction === 'inbound';
+
+      if (isIncoming) {
+        notificationAudio.currentTime = 0;
+        notificationAudio.play().catch(e => console.log('Audio autoplay blocked', e));
+
+        if (activeConversationId !== conversationId) {
+          toast({
+            title: t('notifications.new_message', 'New Message'),
+            description: message.content || t('notifications.media_message', 'Media message'),
+            duration: 3000,
+            onClick: () => {
+              setActiveConversationId(conversationId);
+              navigate('/inbox');
+            }
+          });
+        }
+      }
+
+      setAllConversations(prev => {
+        const index = prev.findIndex(c => c.id === conversationId);
+        if (index === -1) {
+          refetchConversations();
+          return prev;
+        }
+        const conversation = { ...prev[index] };
+        conversation.lastMessageAt = message.createdAt;
+        conversation.lastMessage = message.content;
+        const newConversations = [...prev];
+        newConversations.splice(index, 1);
+        return [conversation, ...newConversations];
+      });
+    };
+
+    const unsubscribe = onMessage('newMessage', handleNewMessage);
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [onMessage, activeConversationId, notificationAudio, toast, t, navigate, refetchConversations]);
 
   useEffect(() => {
     if (user && !authLoading && showGroupChats) {
@@ -1014,26 +1127,26 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
             }
 
             if (existingMsg.content === message.content &&
-                existingMsg.direction === message.direction &&
-                existingMsg.type === message.type &&
-                Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 2000) {
+              existingMsg.direction === message.direction &&
+              existingMsg.type === message.type &&
+              Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 2000) {
               return true;
             }
 
             if (message.mediaUrl && existingMsg.mediaUrl &&
-                existingMsg.mediaUrl === message.mediaUrl &&
-                existingMsg.direction === message.direction &&
-                Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 10000) {
+              existingMsg.mediaUrl === message.mediaUrl &&
+              existingMsg.direction === message.direction &&
+              Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 10000) {
               return true;
             }
 
             if (message.type && existingMsg.type &&
-                message.type === existingMsg.type &&
-                message.direction === existingMsg.direction &&
-                ['image', 'video', 'audio', 'document'].includes(message.type) &&
-                (message.content === `${message.type.charAt(0).toUpperCase() + message.type.slice(1)} message` ||
-                 existingMsg.content === `${existingMsg.type.charAt(0).toUpperCase() + existingMsg.type.slice(1)} message`) &&
-                Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 5000) {
+              message.type === existingMsg.type &&
+              message.direction === existingMsg.direction &&
+              ['image', 'video', 'audio', 'document'].includes(message.type) &&
+              (message.content === `${message.type.charAt(0).toUpperCase() + message.type.slice(1)} message` ||
+                existingMsg.content === `${existingMsg.type.charAt(0).toUpperCase() + existingMsg.type.slice(1)} message`) &&
+              Math.abs(new Date(existingMsg.createdAt).getTime() - new Date(message.createdAt).getTime()) < 5000) {
               return true;
             }
 
@@ -1417,11 +1530,11 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         return oldData.map((conn: any) =>
           conn.id === connectionId
             ? {
-                ...conn,
-                historySyncStatus: status,
-                historySyncProgress: progress,
-                historySyncTotal: total
-              }
+              ...conn,
+              historySyncStatus: status,
+              historySyncProgress: progress,
+              historySyncTotal: total
+            }
             : conn
         );
       });
@@ -1446,10 +1559,10 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         return oldData.map((conn: any) =>
           conn.id === connectionId
             ? {
-                ...conn,
-                historySyncStatus: 'completed',
-                lastHistorySyncAt: new Date().toISOString()
-              }
+              ...conn,
+              historySyncStatus: 'completed',
+              lastHistorySyncAt: new Date().toISOString()
+            }
             : conn
         );
       });
@@ -1519,7 +1632,7 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
           xhrFormData.append('caption', caption);
         }
 
-        xhr.onload = function() {
+        xhr.onload = function () {
           if (xhr.status >= 200 && xhr.status < 300) {
             resolve({
               ok: true,
@@ -1543,11 +1656,11 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
           }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           reject(new Error(t('inbox.network_error', 'Network error')));
         };
 
-        xhr.upload.onprogress = function(event) {
+        xhr.upload.onprogress = function (event) {
           if (event.lengthComputable) {
           }
         };

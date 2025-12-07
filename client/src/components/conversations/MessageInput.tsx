@@ -48,7 +48,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  
+
   const { toast } = useToast();
   const { t } = useTranslation();
   const { sendMessage, sendMediaMessage, replyToMessage, setReplyToMessage } = useConversations();
@@ -56,11 +56,11 @@ export default function MessageInput({ conversationId, conversation, contact }: 
   const focusTextarea = (delay: number = 100, forceForReply: boolean = false) => {
     setTimeout(() => {
       if (textareaRef.current &&
-          !showRecordingUI &&
-          !isMediaModalOpen &&
-          !isEmojiPickerOpen &&
-          !isSending &&
-          !isSendingVoice) {
+        !showRecordingUI &&
+        !isMediaModalOpen &&
+        !isEmojiPickerOpen &&
+        !isSending &&
+        !isSendingVoice) {
 
         const activeElement = document.activeElement;
         const isUserInteracting = activeElement && (
@@ -95,7 +95,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
     setMessage(content);
     focusTextarea(100);
   };
-  
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -128,23 +128,23 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       focusTextarea(300, true);
     }
   }, [replyToMessage]);
-  
+
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  
+
   const startTimer = () => {
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
     }
-    
+
     timerIntervalRef.current = window.setInterval(() => {
       setRecordingTime(prev => prev + 1);
     }, 1000);
   };
-  
+
   const stopTimer = () => {
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
@@ -178,7 +178,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
 
       return true;
     } catch (error) {
-      
+
       setIsWebAudioSupported(false);
       return false;
     }
@@ -231,7 +231,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
     analyserRef.current = null;
     setAudioData(new Uint8Array(30));
   };
-  
+
   const getSupportedAudioFormat = (): { mimeType: string; extension: string } => {
     const formats = [
       { mimeType: 'audio/webm;codecs=opus', extension: 'webm' },
@@ -307,7 +307,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       return false;
     }
   };
-  
+
   const handleStartRecording = async () => {
 
     setRecordedAudio(null);
@@ -353,7 +353,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       });
     }
   };
-  
+
   const handlePauseRecording = () => {
     if (!mediaRecorderRef.current || mediaRecorderRef.current.state !== 'recording') return;
 
@@ -373,7 +373,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       handleStopRecording();
     }
   };
-  
+
   const handleResumeRecording = () => {
     if (!mediaRecorderRef.current || !isPaused) return;
 
@@ -392,17 +392,17 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       setTimeout(handleStartRecording, 100);
     }
   };
-  
+
   const handleStopRecording = () => {
     if (!mediaRecorderRef.current || mediaRecorderRef.current.state === 'inactive') return;
-    
+
     try {
       mediaRecorderRef.current.stop();
       stopTimer();
     } catch (error) {
     }
   };
-  
+
   const handleSendVoiceMessage = async () => {
     if (!recordedAudio || isSendingVoice) {
       if (!recordedAudio) {
@@ -460,7 +460,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       setIsSendingVoice(false);
     }
   };
-  
+
   const handleCancelRecording = () => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       try {
@@ -491,7 +491,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
 
     focusTextarea(100);
   };
-  
+
   const handleSendMessage = async () => {
     if (!message.trim() || isSending) return;
 
@@ -529,7 +529,12 @@ export default function MessageInput({ conversationId, conversation, contact }: 
         setMessage('');
         messageWasSent = true;
       } else {
-        await sendMessage(conversationId, message, false);
+        if (selectedFile) {
+          await sendMediaMessage(conversationId, selectedFile, message);
+          setSelectedFile(null);
+        } else {
+          await sendMessage(conversationId, message, false);
+        }
         setMessage('');
         messageWasSent = true;
       }
@@ -578,17 +583,17 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       }
 
       const result = await response.json();
-      
+
 
       setMessage('');
       setSelectedFile(null);
-      
+
       return result;
     } catch (error: any) {
       throw new Error(error.message || 'Failed to schedule message');
     }
   };
-  
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -600,15 +605,15 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       handleCancelReply();
     }
   };
-  
 
-  
+
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
-    
+
     const file = files[0];
-    
+
     if (file.size > 10 * 1024 * 1024) {
       toast({
         title: t('messages.input.file_too_large', 'File Too Large'),
@@ -617,28 +622,28 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       });
       return;
     }
-    
+
     setSelectedFile(file);
-    setIsMediaModalOpen(true);
-    
+    // setIsMediaModalOpen(true);
+
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
-  
+
   const handleAttachmentClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  
+
   const handleImageClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.accept = 'image/*';
       fileInputRef.current.click();
     }
   };
-  
+
   const handleCloseMediaModal = () => {
     setIsMediaModalOpen(false);
     setSelectedFile(null);
@@ -698,7 +703,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
           }
         });
       } catch (error) {
-        
+
       }
     }
   };
@@ -707,7 +712,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + '...';
   };
-  
+
   useEffect(() => {
     return () => {
       if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
@@ -732,7 +737,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
       }
     };
   }, [audioURL]);
-  
+
   return (
     <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 transition-colors duration-200">
       {replyToMessage && (
@@ -779,6 +784,47 @@ export default function MessageInput({ conversationId, conversation, contact }: 
               <X className="h-4 w-4" />
             </button>
           </div>
+        </div>
+      )}
+
+      {selectedFile && (
+        <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-700 flex items-center justify-between animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="relative h-14 w-14 rounded-md overflow-hidden bg-gray-200 dark:bg-gray-600 flex-shrink-0 border border-gray-200 dark:border-gray-600">
+              {selectedFile.type.startsWith('image/') ? (
+                <img
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Preview"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-full w-full flex items-center justify-center text-gray-400">
+                  {selectedFile.type.startsWith('video/') ? (
+                    <Play className="h-6 w-6" />
+                  ) : (
+                    <Square className="h-6 w-6" />
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-200 truncate max-w-[200px]">
+                {selectedFile.name}
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setSelectedFile(null);
+              if (fileInputRef.current) fileInputRef.current.value = '';
+            }}
+            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-400 transition-colors"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
       )}
 
@@ -966,7 +1012,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
                 {formatTime(recordingTime)}
               </div>
             </div>
-            
+
             <div className="flex-1 mx-4 h-8 flex items-center justify-center">
               {!isPaused ? (
                 <div className="flex items-center justify-center space-x-0.5 h-8 w-full">
@@ -1013,7 +1059,7 @@ export default function MessageInput({ conversationId, conversation, contact }: 
                 </div>
               )}
             </div>
-            
+
             <div className="flex items-center space-x-2">
               {!isSendingVoice && (
                 <>
@@ -1071,11 +1117,11 @@ export default function MessageInput({ conversationId, conversation, contact }: 
               )}
             </div>
           </div>
-          
-          
+
+
         </div>
       )}
-      
+
       <MediaUploadModal
         isOpen={isMediaModalOpen}
         onClose={handleCloseMediaModal}

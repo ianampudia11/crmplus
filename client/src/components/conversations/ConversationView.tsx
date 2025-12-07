@@ -14,6 +14,7 @@ import ConnectionControl from '../whatsapp/ConnectionControl';
 import { ContactAvatar } from '@/components/contacts/ContactAvatar';
 import { TwilioIcon } from '@/components/icons/TwilioIcon';
 import AgentAssignment from './AgentAssignment';
+import { TagManager } from './TagManager';
 import BotIcon from '@/components/ui/bot-icon';
 import { useMobileLayout } from '@/contexts/mobile-layout-context';
 import { shouldShowDateSeparator, getConversationStartDate, formatMessageDate, formatMessageDateTime } from '@/utils/dateUtils';
@@ -146,10 +147,10 @@ export default function ConversationView() {
   });
 
   const isWhatsApp = activeConversation?.channelType === 'whatsapp' ||
-                    activeConversation?.channelType === 'whatsapp_unofficial' ||
-                    activeConversation?.channelType === 'whatsapp_official' ||
-                    activeConversation?.channelType === 'whatsapp_twilio' ||
-                    activeConversation?.channelType === 'whatsapp_360dialog';
+    activeConversation?.channelType === 'whatsapp_unofficial' ||
+    activeConversation?.channelType === 'whatsapp_official' ||
+    activeConversation?.channelType === 'whatsapp_twilio' ||
+    activeConversation?.channelType === 'whatsapp_360dialog';
 
   const { data: whatsAppStatus } = useQuery({
     queryKey: ['/api/whatsapp/status', activeConversation?.channelId],
@@ -362,7 +363,7 @@ export default function ConversationView() {
 
     filteredMessages.forEach((message, index) => {
       const previousMessage = index > 0 ? filteredMessages[index - 1] : null;
-      
+
 
       if (shouldShowDateSeparator(message, previousMessage)) {
         const messageDate = new Date(message.sentAt || message.createdAt);
@@ -446,7 +447,7 @@ export default function ConversationView() {
   const contact = activeConversation?.contact;
 
   const getChannelInfo = (channelType: string) => {
-    switch(channelType) {
+    switch (channelType) {
       case 'whatsapp':
       case 'whatsapp_unofficial':
         return { icon: 'ri-whatsapp-line', color: '#25D366', name: t('conversations.view.channel.whatsapp', 'WhatsApp') };
@@ -478,20 +479,20 @@ export default function ConversationView() {
 
   const getLastActiveTime = () => {
     if (!activeConversation) return '';
-    
+
 
     const lastMessage = activeMessages[activeMessages.length - 1];
     if (lastMessage) {
       const lastMessageDate = new Date(lastMessage.sentAt || lastMessage.createdAt);
       return formatMessageDateTime(lastMessageDate);
     }
-    
+
 
     if (activeConversation.updatedAt) {
       const updatedDate = new Date(activeConversation.updatedAt);
       return formatMessageDateTime(updatedDate);
     }
-    
+
     return t('inbox.last_active_unknown', 'Last active unknown');
   };
 
@@ -559,6 +560,12 @@ export default function ConversationView() {
                   size="sm"
                 />
               )}
+              {!activeConversation?.isGroup && contact && (
+                <TagManager
+                  contactId={contact.id}
+                  initialTags={contact.tags || []}
+                />
+              )}
             </div>
             <div className="flex items-center text-xs sm:text-sm text-gray-500 mt-1">
               <span className="flex items-center">
@@ -620,9 +627,8 @@ export default function ConversationView() {
 
           <button
             onClick={toggleContactDetails}
-            className={`p-2 sm:p-1.5 rounded-md hover:bg-gray-100 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto flex items-center justify-center ${
-              isContactDetailsOpen ? 'bg-primary-50 text-primary-600' : 'text-gray-600'
-            }`}
+            className={`p-2 sm:p-1.5 rounded-md hover:bg-gray-100 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto flex items-center justify-center ${isContactDetailsOpen ? 'bg-primary-50 text-primary-600' : 'text-gray-600'
+              }`}
             aria-label={isContactDetailsOpen ? t('contacts.details.close_details', 'Close contact details') : t('contacts.details.show_details', 'Show contact details')}
           >
             <i className="ri-information-line text-lg sm:text-base"></i>
@@ -653,9 +659,8 @@ export default function ConversationView() {
               e.stopPropagation();
               toggleContactDetails();
             }}
-            className={`p-2 sm:p-1.5 rounded-md hover:bg-gray-100 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto flex items-center justify-center transition-colors duration-200 ${
-              isContactDetailsOpen ? 'bg-primary-50 text-primary-600' : 'text-gray-600'
-            }`}
+            className={`p-2 sm:p-1.5 rounded-md hover:bg-gray-100 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto flex items-center justify-center transition-colors duration-200 ${isContactDetailsOpen ? 'bg-primary-50 text-primary-600' : 'text-gray-600'
+              }`}
             aria-label={isContactDetailsOpen ? t('contacts.details.close_details', 'Close contact details') : t('contacts.details.show_details', 'Show contact details')}
           >
             <i className={`ri-more-2-fill transition-transform duration-200 ${isContactDetailsOpen ? 'rotate-90' : ''}`}></i>
@@ -704,17 +709,15 @@ export default function ConversationView() {
         {activeConversation?.isGroup ? (
           <GroupInfoPanel
             conversation={activeConversation}
-            className={`${
-              isContactDetailsOpen ? 'flex' : 'hidden'
-            } flex-col fixed top-0 right-0 h-full z-50 lg:static lg:z-0 w-full max-w-sm sm:max-w-md lg:w-80 bg-white border-l border-gray-200 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out overflow-y-auto`}
+            className={`${isContactDetailsOpen ? 'flex' : 'hidden'
+              } flex-col fixed top-0 right-0 h-full z-50 lg:static lg:z-0 w-full max-w-sm sm:max-w-md lg:w-80 bg-white border-l border-gray-200 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out overflow-y-auto`}
           />
         ) : (
           <ContactDetails
             contact={contact}
             conversation={activeConversation}
-            className={`${
-              isContactDetailsOpen ? 'flex' : 'hidden'
-            } flex-col fixed top-0 right-0 h-full z-50 lg:static lg:z-0 w-full max-w-sm sm:max-w-md lg:w-80 bg-white border-l border-gray-200 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out overflow-y-auto`}
+            className={`${isContactDetailsOpen ? 'flex' : 'hidden'
+              } flex-col fixed top-0 right-0 h-full z-50 lg:static lg:z-0 w-full max-w-sm sm:max-w-md lg:w-80 bg-white border-l border-gray-200 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out overflow-y-auto`}
           />
         )}
       </div>
