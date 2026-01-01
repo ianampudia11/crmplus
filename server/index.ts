@@ -112,14 +112,12 @@ app.use((req, res, next) => {
 
 
 
-        // Temporarily disabled auto-migrations for debugging
-        logger.info('migration', 'Skipping automatic migrations (run manually with npm run db:migrate)');
-        // try {
-        //   await migrationSystem.runPendingMigrations();
-        //   logger.info('migration', 'Database migrations completed successfully');
-        // } catch (error) {
-        //   logger.error('migration', 'Migration failed:', error);
-        // }
+        try {
+          await migrationSystem.runPendingMigrations();
+          logger.info('migration', 'Database migrations completed successfully');
+        } catch (error) {
+          logger.error('migration', 'Migration failed:', error);
+        }
 
 
         logger.info('whatsapp', 'Starting WhatsApp auto-reconnection...');
