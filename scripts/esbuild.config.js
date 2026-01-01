@@ -25,14 +25,14 @@ const config = {
   minify: isProduction,
   target: 'node18',
 
-  drop: isProduction ? ['console', 'debugger'] : [],
+  drop: [],
 
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode),
   },
 
   banner: {
-    js: isProduction 
+    js: isProduction
       ? '// Production build - console logs removed for performance and security'
       : '// Development build - console logs preserved for debugging'
   },
@@ -54,26 +54,26 @@ async function build() {
 
 
 
-    
+
     const result = await esbuild.build(config);
-    
+
     if (result.errors.length > 0) {
       console.error('❌ Build errors:', result.errors);
       process.exit(1);
     }
-    
+
     if (result.warnings.length > 0) {
       console.warn('⚠️ Build warnings:', result.warnings);
     }
-    
 
-    
+
+
     if (isProduction) {
 
     } else {
 
     }
-    
+
   } catch (error) {
     console.error('❌ Build failed:', error);
     process.exit(1);
