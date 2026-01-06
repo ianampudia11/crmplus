@@ -1,0 +1,63 @@
+
+=== TABLE: tags ===
+  COL: id integer NOT NULL DEFAULT nextval('tags_id_seq'::regclass)
+  COL: name character varying NOT NULL DEFAULT null
+  COL: color character varying NULL DEFAULT null
+  COL: company_id integer NULL DEFAULT null
+  COL: created_at timestamp without time zone NULL DEFAULT CURRENT_TIMESTAMP
+  CON: tags_pkey PRIMARY KEY (id) -> tags(id)
+  CON: tags_company_id_fkey FOREIGN KEY (company_id) -> companies(id)
+  CON: tags_company_id_name_key UNIQUE (company_id) -> tags(name)
+  CON: tags_company_id_name_key UNIQUE (company_id) -> tags(company_id)
+  CON: tags_company_id_name_key UNIQUE (name) -> tags(name)
+  CON: tags_company_id_name_key UNIQUE (name) -> tags(company_id)
+
+=== TABLE: contact_tags ===
+  COL: id integer NOT NULL DEFAULT nextval('contact_tags_id_seq'::regclass)
+  COL: contact_id integer NULL DEFAULT null
+  COL: tag_id integer NULL DEFAULT null
+  CON: contact_tags_pkey PRIMARY KEY (id) -> contact_tags(id)
+  CON: contact_tags_contact_id_tag_id_key UNIQUE (contact_id) -> contact_tags(contact_id)
+  CON: contact_tags_contact_id_tag_id_key UNIQUE (contact_id) -> contact_tags(tag_id)
+  CON: contact_tags_contact_id_tag_id_key UNIQUE (tag_id) -> contact_tags(contact_id)
+  CON: contact_tags_contact_id_tag_id_key UNIQUE (tag_id) -> contact_tags(tag_id)
+  CON: contact_tags_contact_id_fkey FOREIGN KEY (contact_id) -> contacts(id)
+  CON: contact_tags_tag_id_fkey FOREIGN KEY (tag_id) -> tags(id)
+
+=== TABLE: contact_tasks ===
+  COL: id integer NOT NULL DEFAULT nextval('contact_tasks_id_seq'::regclass)
+  COL: contact_id integer NULL DEFAULT null
+  COL: company_id integer NOT NULL DEFAULT null
+  COL: title text NOT NULL DEFAULT null
+  COL: description text NULL DEFAULT null
+  COL: priority text NOT NULL DEFAULT 'medium'::text
+  COL: status text NOT NULL DEFAULT 'not_started'::text
+  COL: due_date timestamp without time zone NULL DEFAULT null
+  COL: completed_at timestamp without time zone NULL DEFAULT null
+  COL: assigned_to text NULL DEFAULT null
+  COL: category text NULL DEFAULT null
+  COL: tags ARRAY NULL DEFAULT null
+  COL: created_by integer NULL DEFAULT null
+  COL: updated_by integer NULL DEFAULT null
+  COL: created_at timestamp without time zone NOT NULL DEFAULT now()
+  COL: updated_at timestamp without time zone NOT NULL DEFAULT now()
+  COL: background_color character varying NULL DEFAULT '#ffffff'::character varying
+  COL: checklist jsonb NULL DEFAULT '[]'::jsonb
+  CON: contact_tasks_pkey PRIMARY KEY (id) -> contact_tasks(id)
+  CON: contact_tasks_contact_id_fkey FOREIGN KEY (contact_id) -> contacts(id)
+  CON: contact_tasks_company_id_fkey FOREIGN KEY (company_id) -> companies(id)
+  CON: contact_tasks_created_by_fkey FOREIGN KEY (created_by) -> users(id)
+  CON: contact_tasks_updated_by_fkey FOREIGN KEY (updated_by) -> users(id)
+
+=== TABLE: task_categories ===
+  COL: id integer NOT NULL DEFAULT nextval('task_categories_id_seq'::regclass)
+  COL: company_id integer NOT NULL DEFAULT null
+  COL: name text NOT NULL DEFAULT null
+  COL: color text NULL DEFAULT null
+  COL: icon text NULL DEFAULT null
+  COL: created_by integer NULL DEFAULT null
+  COL: created_at timestamp without time zone NOT NULL DEFAULT now()
+  COL: updated_at timestamp without time zone NOT NULL DEFAULT now()
+  CON: task_categories_pkey PRIMARY KEY (id) -> task_categories(id)
+  CON: task_categories_company_id_fkey FOREIGN KEY (company_id) -> companies(id)
+  CON: task_categories_created_by_fkey FOREIGN KEY (created_by) -> users(id)
