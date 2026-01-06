@@ -80,8 +80,9 @@ app.use((req, res, next) => {
     }
 
     // SKIP MIGRATIONS FOR LOCAL DEBUGGING - DB IS FIXED MANUALLY
-    // await migrationSystem.runPendingMigrations();
-    // logger.info('migration', 'Database migrations completed successfully');
+    console.log('DEBUG: Running pending migrations...');
+    await migrationSystem.runPendingMigrations();
+    logger.info('migration', 'Database migrations completed successfully');
   } catch (error) {
     logger.error('migration', 'Migration failed (but ignored for debug):', error);
     // process.exit(1); // Exit if migrations fail
