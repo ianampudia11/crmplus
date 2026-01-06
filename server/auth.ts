@@ -271,7 +271,8 @@ export async function setupAuth(app: Express) {
         timestamp: new Date().toISOString()
       });
     } catch (e: any) {
-      res.status(500).json({ error: e.message });
+      console.error('DEBUG AUTH ERROR:', e);
+      res.status(500).json({ error: e.message, fullError: String(e), stack: e.stack });
     }
   });
 

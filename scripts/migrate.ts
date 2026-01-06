@@ -1,9 +1,10 @@
+
 // Load environment variables FIRST before any imports
 import { config } from 'dotenv';
 config();
 
-import { pool } from '../server/db.ts';
-import { MigrationSystem } from '../server/migration-system.ts';
+import { pool } from '../server/db';
+import { MigrationSystem } from '../server/migration-system';
 
 async function runMigrations() {
     console.log('Starting migrations...');

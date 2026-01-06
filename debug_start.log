@@ -1,0 +1,258 @@
+DEBUG: Starting application...
+DEBUG: Upload directories ensured
+DEBUG: Current working directory: C:\Users\ianam\.gemini\antigravity\scratch\ianampudia11
+DEBUG: Migrations directory found. Files: [
+  '001-initial-schema.sql',
+  '002-add-whatsapp-channel-type.sql',
+  '002-prevent-duplicate-deals.sql',
+  '002-reconcile-whatsapp-official-contact-duplicates-v1.sql',
+  '004-follow-up-system-setup.sql',
+  '005-add-timezone-to-follow-up-schedules.sql',
+  '006-follow-up-timezone-optimization-fix.sql',
+  '007-partner-configurations.sql',
+  '008-360dialog-partner-tables.sql',
+  '008-add-tiktok-provider.sql',
+  '009-meta-whatsapp-partner-tables.sql',
+  '010-api-access-tables.sql',
+  '012-email-channel-support.sql',
+  '012-fix-channel-connection-company-ids.sql',
+  '013-add-moyasar-payment-method.sql',
+  '014-social-login-tables.sql',
+  '015-affiliate-management-system.sql',
+  '016-affiliate-applications.sql',
+  '016-pricing-discounts-coupons.sql',
+  '020-ai-credentials-system.sql',
+  '020-cleanup-failed-migration.sql',
+  '020-fix-duplicate-message-constraints.sql',
+  '020-password-reset-tokens.sql',
+  '021-ai-token-billing-plans.sql',
+  '021-drop-external-id-constraint.sql',
+  '021-fix-multi-channel-triggers.sql',
+  '021-remove-maintenance-mode.sql',
+  '021-update-ai-provider-constraints.sql',
+  '022-enhanced-subscription-system.sql',
+  '023-fix-subscription-status-constraint.sql',
+  '024-add-reaction-message-type.sql',
+  '024-website-builder-system.sql',
+  '025-quick-reply-templates.sql',
+  '026-knowledge-base-system.sql',
+  '027-contact-documents.sql',
+  '027-whatsapp-history-sync.sql',
+  '028-contact-audit-logs.sql',
+  '028-zoho-calendar-tokens.sql',
+  '029-add-contacts-archived-field.sql',
+  '029-calendly-calendar-tokens.sql',
+  '030-add-contact-tasks-table.sql',
+  '030-storage-management-system.sql',
+  '031_create_backup_system.sql',
+  '032-ensure-task-permissions-for-all-companies.sql',
+  '032_add_users_active_column.sql',
+  '033-update-default-role-permissions-function.sql',
+  '033_add_missing_companies_columns.sql',
+  '034-fix-subscription-renewal-data-consistency.sql',
+  '035-add-plan-duration-fields.sql',
+  '036-add-mpesa-payment-method.sql',
+  '037-add-contacts-search-indexes.sql',
+  '040-add-twilio-sms-and-calls.sql',
+  '048_add_connection_id_to_templates.sql',
+  '058_add_media_handle_to_templates.sql',
+  '064-add-meta-partner-fields.sql',
+  '080-add_conversation_starred_archived.sql',
+  '090-add_task_categories_table.sql',
+  '091-add-background-color-to-tasks.sql',
+  '092-normalize-channel-statuses.sql',
+  '094_add_scheduled_messages.sql',
+  '095_add_media_file_path_to_scheduled_messages.sql',
+  '096_add_proxy_configuration_to_channel_connections.sql',
+  '097_add_proxy_integrity_checks.sql',
+  '098_set_default_proxy_test_status.sql',
+  '099_create_whatsapp_proxy_servers_table.sql',
+  '100_create_database_backups_tables.sql',
+  '101-remove-embedding-column.sql',
+  '102-add_messenger_performance_indexes.sql',
+  '103-add_task_permissions_to_existing_companies.sql',
+  '104-add_webchat_channel_type.sql',
+  '105-add-company-pages.sql',
+  '106-add-company-subdomain.sql',
+  '107-add-subdomain-authentication-setting.sql',
+  '108-contact_add_contact_unique_constraints.sql',
+  '2025-01-15-remove-embedding-column.sql',
+  '2026-01-02-130100-add_properties_system.sql',
+  '2026-01-02-130300-add_lead_property_interests.sql',
+  '2026-01-02-130400-add_pipelines_tables.sql',
+  '2026-01-02-130500-add_attachments.sql',
+  '2026-01-02-130600-add_checklists.sql',
+  '2026-01-02-130700-add_comments.sql',
+  '2026-01-02-150000-add_property_media.sql',
+  'meta'
+]
+DEBUG: Registering webhook routes...
+DEBUG: Webhook routes registered
+DEBUG: Registering routes...
+Warning: Please use the `legacy` build in Node.js environments.
+DEBUG: Setting up auth middleware...
+DEBUG: Passport initialized
+DEBUG: Routes registered
+DEBUG: CampaignQueueService module loaded
+{"level":40,"time":1767664092557,"pid":24100,"hostname":"PC-DEV","msg":"no name present, ignoring presence update request..."}
+{"level":40,"time":1767664095995,"pid":24100,"hostname":"PC-DEV","node":{"tag":"notification","attrs":{"from":"18795464810674@lid","type":"mex","id":"3737033127","offline":"0","t":"1767572689"},"content":[{"tag":"update","attrs":{"op_name":"NotificationLinkedProfilesUpdates"},"content":{"type":"Buffer","data":[123,34,100,97,116,97,34,58,123,34,120,119,97,50,95,110,111,116,105,102,121,95,108,105,110,107,101,100,95,112,114,111,102,105,108,101,115,34,58,123,34,97,100,100,101,100,95,112,114,111,102,105,108,101,115,34,58,110,117,108,108,44,34,106,105,100,34,58,34,49,56,55,57,53,52,54,52,56,49,48,54,55,52,64,108,105,100,34,44,34,114,101,109,111,118,101,100,95,112,114,111,102,105,108,101,115,34,58,110,117,108,108,125,125,125]}}]},"msg":"Invalid mex newsletter notification"}
+[WhatsApp Routing] [2026-01-06T01:48:19.744Z] [conn:5] [msg:A592E1D84E396522A2539CD6A873C5FC] Initial message receipt: {
+  rawRemoteJid: '174371444383867@lid',
+  normalizedRemoteJid: '174371444383867@s.whatsapp.net',
+  remoteJidAlt: '51946008615@s.whatsapp.net',
+  participantAlt: null,
+  fromMe: false,
+  id: 'A592E1D84E396522A2539CD6A873C5FC',
+  participant: null,
+  userId: 3,
+  connectionId: 5,
+  pushName: 'sacocruz7',
+  messageType: 'conversation'
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.745Z] [conn:5] [msg:A592E1D84E396522A2539CD6A873C5FC] Resolved @lid via remoteJidAlt (Baileys official): {
+  originalLidJid: '174371444383867@lid',
+  resolvedJid: '51946008615@s.whatsapp.net',
+  actualPhoneNumber: '51946008615'
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.745Z] [conn:5] [msg:A592E1D84E396522A2539CD6A873C5FC] Sender identification: {
+  isGroupChat: false,
+  groupJid: null,
+  participantJid: null,
+  participantName: null,
+  extractedPhoneNumber: '51946008615',
+  resolvedRemoteJid: '51946008615@s.whatsapp.net',
+  normalizedRemoteJid: '174371444383867@s.whatsapp.net',
+  rawRemoteJid: '174371444383867@lid',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.745Z] [conn:5] [msg:A592E1D84E396522A2539CD6A873C5FC] Phone number normalization: {
+  rawPhoneNumber: '51946008615',
+  cleanPhoneNumber: '51946008615',
+  canonicalIdentifier: '51946008615',
+  remoteJid: '174371444383867@s.whatsapp.net',
+  originalRemoteJid: '174371444383867@lid'
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.896Z] [conn:5] [msg:A592E1D84E396522A2539CD6A873C5FC] Contact created: {
+  contactId: 44,
+  phone: '+51946008615',
+  name: '51946008615',
+  identifier: '51946008615',
+  resolvedRemoteJid: '51946008615@s.whatsapp.net',
+  normalizedRemoteJid: '174371444383867@s.whatsapp.net',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.996Z] [conn:5] [msg:544] Before scheduling processing: {
+  remoteJid: '51946008615@s.whatsapp.net',
+  canonicalIdentifier: '51946008615',
+  debounceKey: '5_51946008615',
+  messageId: 544,
+  conversationId: 29,
+  contactId: 44,
+  debouncingEnabled: true,
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.997Z] [conn:5] [msg:544] Scheduling debounced processing: {
+  remoteJid: '51946008615@s.whatsapp.net',
+  canonicalIdentifier: '51946008615',
+  debounceKey: '5_51946008615',
+  conversationId: 29,
+  contactId: 44
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.998Z] [conn:5] [msg:ACF0F58E4D094F55761890A9EB0A8332] Initial message receipt: {
+  rawRemoteJid: '72804594630686@lid',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  remoteJidAlt: '51907037074@s.whatsapp.net',
+  participantAlt: null,
+  fromMe: true,
+  id: 'ACF0F58E4D094F55761890A9EB0A8332',
+  participant: null,
+  userId: 3,
+  connectionId: 5,
+  pushName: 'Vito Mensajero',
+  messageType: 'conversation'
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.999Z] [conn:5] [msg:ACF0F58E4D094F55761890A9EB0A8332] Resolved @lid via remoteJidAlt (Baileys official): {
+  originalLidJid: '72804594630686@lid',
+  resolvedJid: '51907037074@s.whatsapp.net',
+  actualPhoneNumber: '51907037074'
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.999Z] [conn:5] [msg:ACF0F58E4D094F55761890A9EB0A8332] Sender identification: {
+  isGroupChat: false,
+  groupJid: null,
+  participantJid: null,
+  participantName: null,
+  extractedPhoneNumber: '51907037074',
+  resolvedRemoteJid: '51907037074@s.whatsapp.net',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  rawRemoteJid: '72804594630686@lid',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:19.999Z] [conn:5] [msg:ACF0F58E4D094F55761890A9EB0A8332] Phone number normalization: {
+  rawPhoneNumber: '51907037074',
+  cleanPhoneNumber: '51907037074',
+  canonicalIdentifier: '51907037074',
+  remoteJid: '72804594630686@s.whatsapp.net',
+  originalRemoteJid: '72804594630686@lid'
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.137Z] [conn:5] [msg:ACF0F58E4D094F55761890A9EB0A8332] Contact created: {
+  contactId: 46,
+  phone: '+51907037074',
+  name: '51907037074',
+  identifier: '51907037074',
+  resolvedRemoteJid: '51907037074@s.whatsapp.net',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.156Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Initial message receipt: {
+  rawRemoteJid: '72804594630686@lid',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  remoteJidAlt: '51907037074@s.whatsapp.net',
+  participantAlt: null,
+  fromMe: true,
+  id: 'AC038C1D676F7E58B647443963E3E6E3',
+  participant: null,
+  userId: 3,
+  connectionId: 5,
+  pushName: 'Vito Mensajero',
+  messageType: 'conversation'
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.157Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Resolved @lid via remoteJidAlt (Baileys official): {
+  originalLidJid: '72804594630686@lid',
+  resolvedJid: '51907037074@s.whatsapp.net',
+  actualPhoneNumber: '51907037074'
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.157Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Sender identification: {
+  isGroupChat: false,
+  groupJid: null,
+  participantJid: null,
+  participantName: null,
+  extractedPhoneNumber: '51907037074',
+  resolvedRemoteJid: '51907037074@s.whatsapp.net',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  rawRemoteJid: '72804594630686@lid',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.157Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Phone number normalization: {
+  rawPhoneNumber: '51907037074',
+  cleanPhoneNumber: '51907037074',
+  canonicalIdentifier: '51907037074',
+  remoteJid: '72804594630686@s.whatsapp.net',
+  originalRemoteJid: '72804594630686@lid'
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.293Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Contact created: {
+  contactId: 46,
+  phone: '+51907037074',
+  name: '51907037074',
+  identifier: '51907037074',
+  resolvedRemoteJid: '51907037074@s.whatsapp.net',
+  normalizedRemoteJid: '72804594630686@s.whatsapp.net',
+  wasLidResolved: true
+}
+[WhatsApp Routing] [2026-01-06T01:48:20.299Z] [conn:5] [msg:AC038C1D676F7E58B647443963E3E6E3] Conversation found: { conversationId: 30, contactId: 46, channelId: 5, isGroup: false }
+[WhatsApp Routing] [2026-01-06T01:48:25.009Z] [msg:544] Processing through flow executor: {
+  contactPhone: '+51946008615',
+  cleanPhone: '51946008615',
+  messageCanonicalId: '51946008615',
+  messageRemoteJid: '51946008615@s.whatsapp.net',
+  conversationId: 29
+}
